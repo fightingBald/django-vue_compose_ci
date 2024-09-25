@@ -9,7 +9,7 @@ on:
       - main
 
 jobs:
-  build-and-test:
+  build-and-publish:
     runs-on: ubuntu-latest
 
     steps:
@@ -23,13 +23,13 @@ jobs:
         run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
 
       - name: Build Docker image
-        run: docker build -f docker/Dockerfile . -t assignment
+        run: docker build -f docker/Dockerfile . -t gavinoddman/public_python:latest
 
       - name: Push Docker image to Docker Hub
         run: docker push gavinoddman/public_python:latest
 
       - name: Run tests in Docker container
-        run: docker run --name assignment_container assignment pytest
+        run: docker run --name assignment_container gavinoddman/public_python pytest
 
       - name: Stop and remove container
         run: |
@@ -37,4 +37,4 @@ jobs:
           docker rm assignment_container
 
       - name: Clean up
-        run: docker rmi assignment
+        run: docker rmi gavinoddman/public_python:latest
