@@ -27,8 +27,8 @@ jobs:
 
       - name: Stop and remove container
         run: |
-          docker stop assignment_container
-          docker rm assignment_container
+          docker stop assignment
+          docker rm assignment
 
       - name: Clean up
         run: docker rmi assignment
