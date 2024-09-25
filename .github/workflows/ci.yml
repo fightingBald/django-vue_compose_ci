@@ -23,12 +23,13 @@ jobs:
         run: docker build -f docker/Dockerfile . -t assignment
 
       - name: Run tests in Docker container
-        run: docker run assignment pytest
+        run: docker run --name assignment_container assignment pytest
 
       - name: Stop and remove container
         run: |
-          docker stop assignment
-          docker rm assignment
+          docker stop assignment_container
+          docker rm assignment_container
 
+      # Clean up the Docker image
       - name: Clean up
         run: docker rmi assignment
