@@ -30,6 +30,5 @@ jobs:
           docker stop assignment_container
           docker rm assignment_container
 
-      # Clean up the Docker image
       - name: Clean up
         run: docker rmi assignment
