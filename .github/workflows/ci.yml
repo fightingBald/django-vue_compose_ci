@@ -25,5 +25,10 @@ jobs:
       - name: Run tests in Docker container
         run: docker run assignment pytest
 
+      - name: Stop and remove container
+        run: |
+          docker stop assignment_container
+          docker rm assignment_container
+
       - name: Clean up
         run: docker rmi assignment
