@@ -83,10 +83,14 @@ jobs:
 
       - name: Run migrations
         working-directory: ./backend
+        env:
+          DATABASE_HOST: localhost
         run: python manage.py migrate
 
       - name: Run tests
         working-directory: ./backend
+        env:
+          DATABASE_HOST: localhost
         run: python manage.py test
 
       - name: Set up Docker Buildx
