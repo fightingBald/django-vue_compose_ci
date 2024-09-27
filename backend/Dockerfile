@@ -1,13 +1,13 @@
-FROM python:3.2-slim
+FROM python:3.12-alpine
 
 ENV PYTHONUNBUFFERED=1
 
 WORKDIR /app
 
-RUN apt-get update && apt-get install -y \
+RUN apk update && apk add --no-cache \
+    libpq \
     libpq-dev \
-    build-essential \
-    && rm -rf /var/lib/apt/lists/*
+    build-base
 
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
