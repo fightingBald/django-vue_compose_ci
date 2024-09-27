@@ -37,10 +37,9 @@ jobs:
           tags: your-dockerhub-username/your-frontend-image:${{ github.sha }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
-          secrets:
-            DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
-            DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
-
+          secrets: |
+            DOCKERHUB_USERNAME=${{ secrets.DOCKERHUB_USERNAME }}
+            DOCKERHUB_PASSWORD=${{ secrets.DOCKERHUB_PASSWORD }}
 
   build-and-test-backend:
     name: Build and Test Backend
@@ -102,6 +101,6 @@ jobs:
           tags: your-dockerhub-username/your-backend-image:${{ github.sha }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
-          secrets:
-            DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
-            DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
+          secrets: |
+            DOCKERHUB_USERNAME=${{ secrets.DOCKERHUB_USERNAME }}
+            DOCKERHUB_PASSWORD=${{ secrets.DOCKERHUB_PASSWORD }}
