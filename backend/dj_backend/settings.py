@@ -11,13 +11,41 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 import os
 from pathlib import Path
+
 import environ
+
+# Build paths inside the project
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Initialize environment variables
 env = environ.Env(
-    # Set casting, default value
-    DEBUG=(bool, False)
+    DEBUG=(bool, False),
+    DATABASE_HOST=(str, 'db'),  # Default to 'db' for Docker Compose
 )
+
+# Read the .env file
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
+
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = env('DEBUG')
+
+# Get the database host from environment variables
+DATABASE_HOST = env('DATABASE_HOST')
+
+# Database configuration
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': env('DATABASE_NAME'),
+        'USER': env('DATABASE_USER'),
+        'PASSWORD': env('DATABASE_PASSWORD'),
+        'HOST': DATABASE_HOST,
+        'PORT': env('DATABASE_PORT', default='5432'),
+    }
+}
+
+# Other settings...
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -78,12 +106,6 @@ WSGI_APPLICATION = 'dj_backend.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
-
-DATABASE_URL = env('DATABASE_URL', default='postgres://dbuser:dbpassword@db:5432/dbname')
-
-DATABASES = {
-    'default': env.db(default=DATABASE_URL)
-}
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
