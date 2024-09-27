@@ -22,9 +22,6 @@ DEBUG = env('DEBUG', default=False)
 
 ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=[])
 
-# Get the database host from environment variables
-DATABASE_HOST = env('DATABASE_HOST')
-
 # Database configuration
 DATABASES = {
     'default': {
@@ -32,7 +29,7 @@ DATABASES = {
         'NAME': env('DATABASE_NAME'),
         'USER': env('DATABASE_USER'),
         'PASSWORD': env('DATABASE_PASSWORD'),
-        'HOST': DATABASE_HOST,
+        'HOST': env('DATABASE_HOST'),
         'PORT': env('DATABASE_PORT', default='5432'),
     }
 }
