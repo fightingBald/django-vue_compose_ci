@@ -1,38 +1,38 @@
+import environ
 import os
 from pathlib import Path
-import environ
 
-# Build paths inside the project
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Initialize environment variables
 env = environ.Env(
     DEBUG=(bool, False),
-    DATABASE_HOST=(str, 'db'),  # Default to 'db' for Docker Compose
+    DATABASE_PORT=(int, 5432),
 )
 
 # Read the .env file
 environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env('SECRET_KEY', default='your-secret-key')
+# SECRET_KEY
+SECRET_KEY = env('SECRET_KEY', default='my-secret-key')
 
-# SECURITY WARNING: don't run with debug turned on in production!
+# DEBUG
 DEBUG = env('DEBUG', default=False)
 
+# ALLOWED_HOSTS
 ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=[])
 
-# Database configuration
+# DATABASES
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': env('DATABASE_NAME'),
-        'USER': env('DATABASE_USER'),
-        'PASSWORD': env('DATABASE_PASSWORD'),
-        'HOST': env('DATABASE_HOST'),
-        'PORT': env('DATABASE_PORT', default='5432'),
+        'NAME': env('DATABASE_NAME', default='dbname'),
+        'USER': env('DATABASE_USER', default='dbuser'),
+        'PASSWORD': env('DATABASE_PASSWORD', default='dbpassword'),
+        'HOST': env('DATABASE_HOST', default='db'),
+        'PORT': env('DATABASE_PORT', default=5432),
     }
 }
+
 
 # Application definition
 INSTALLED_APPS = [
