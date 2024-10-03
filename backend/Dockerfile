@@ -10,10 +10,11 @@ RUN apk update && apk add --no-cache \
     build-base
 
 COPY requirements.txt .
+COPY entrypoint.sh /entrypoint.sh
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
-
+RUN chmod +x /entrypoint.sh
 EXPOSE 8000
 
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+ENTRYPOINT ["/entrypoint.sh"]
